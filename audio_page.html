@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio and Survey Page</title>
+</head>
+<body>
+    <!-- Audio Player -->
+    <audio id="audioPlayer" autoplay controls></audio>
+
+    <!-- Sliders -->
+    <div id="slidersContainer">
+        <div>
+            <label for="slider1" id="1-low"></label>
+            <input type="range" id="slider1" min="0" max="1" value="0.5" step="0.01" onchange="checkCompletion()">
+            <label id="1-high"></label>
+        </div>
+        <div>
+            <label for="slider2" id="2-low"></label>
+            <input type="range" id="slider2" min="0" max="1" value="0.5" step="0.01" onchange="checkCompletion()">
+            <label id="2-high"></label>
+        </div>
+        <div>
+            <label for="slider3" id="3-low"></label>
+            <input type="range" id="slider3" min="0" max="1" value="0.5" step="0.01" onchange="checkCompletion()">
+            <label id="3-high"></label>
+        </div>
+        <div>
+            <label for="slider4" id="4-low"></label>
+            <input type="range" id="slider4" min="0" max="1" value="0.5" step="0.01" onchange="checkCompletion()">
+            <label id="4-high"></label>
+        </div>
+        <div>
+            <label for="slider5" id="5-low"></label>
+            <input type="range" id="slider5" min="0" max="1" value="0.5" step="0.01" onchange="checkCompletion()">
+            <label id="5-high"></label>
+        </div>
+    </div>
+
+    <!-- Radio Buttons -->
+    <div id="radioContainer">
+        <input type="radio" name="choice" id="radio1" value="Continue" onchange="checkCompletion()"> Continue
+        <input type="radio" name="choice" id="radio2" value="Finish" onchange="checkCompletion()"> Finish
+    </div>
+
+    <!-- Next Button -->
+    <button id="nextButton" disabled onclick="playNextAudio()">Next</button>
+
+    <script>
+    // Bipolar descriptors
+    const pairs = [
+      "accidental", "deliberate", "aggressive", "peaceful", "alarming", "soothing", 
+      "announcing", "concealing", "approaching", "retreating", "artificial", "natural",
+      "assertive", "easygoing", "awful", "nice", "balanced", "unbalanced", "blunt", 
+      "sharp", "boring", "exciting", "bright", "dull", "bubbly", "subdued", "cartoonish", 
+      "real-life", "chaotic", "orderly", "cheerful", "gloomy", "clean", "dirty", "close", 
+      "far", "closed", "open", "clumsy", "coordinated", "cold", "hot", "comfort", 
+      "discomfort", "comforting", "upsetting", "compressed", "expanded", "dangerous", 
+      "safe", "descending", "ascending", "desolate", "populous", "digital", "analogue", 
+      "distorted", "clear", "distressing", "reassuring", "disturbing", "delightful", 
+      "dry", "wet", "dynamic", "static", "earthy", "airy", "electronic", "acoustic", 
+      "empty", "full", "encouraging", "discouraging", "energetic", "lethargic", "falling", 
+      "rising", "fast", "slow", "fearful", "brave", "focused", "blurred", "funny", 
+      "serious", "futuristic", "old-fashioned", "gentle", "harsh", "grainy", "smooth", 
+      "growing", "shrinking", "hard", "soft", "empty", "full", "distorted", "clear"
+    ];
+
+    // Initialize the first and last values for generating the range
+    var firstValue = 1;
+    var lastValue = 3835;
+
+    // Generate the array from firstValue to lastValue
+    var availableNumbers = [];
+    for (var i = firstValue; i <= lastValue; i++) {
+        availableNumbers.push(i);
+    }
+
+        function generateRandomNumberForAudio() {
+    // Select a random index from the available numbers array
+    var randomIndex = Math.floor(Math.random() * availableNumbers.length);
+    var randomNumber = availableNumbers[randomIndex];
+    availableNumbers.splice(randomIndex, 1);
+    return randomNumber;
+}
+
+function generateRandomArray(n) {
+    // Create an array with numbers 0 to n-1
+    const numbers = Array.from({ length: n }, (_, index) => index);
+
+    // Shuffle the array using the Fisher-Yates algorithm
+    for (let i = numbers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numbers[i], numbers[j]] = [numbers[j], numbers[i]]; // Swap elements
+    }
+
+    return numbers;
+}
+
+var bipolarDescriptorArray = generateRandomArray(10);
+var bipolarDescriptorArrayCounter = 0;
+
+function assignStringsToElements(stringsArray) {
+    for (let i = 0; i < 10; i+=2) {
+        const lowElementId = `${i/2 + 1}-low`;
+        const lowElement = document.getElementById(lowElementId);
+
+        const highElementId = `${i/2 + 1}-high`;
+        const highElement = document.getElementById(highElementId);
+
+        if (lowElement) {
+            lowElement.textContent = stringsArray[bipolarDescriptorArray[bipolarDescriptorArrayCounter]*10 + i];
+        } else {
+            console.warn(`Element with ID "${lowElementId}" not found.`);
+        }
+
+        if (highElement) {
+            highElement.textContent = stringsArray[bipolarDescriptorArray[bipolarDescriptorArrayCounter]*10 + i + 1];
+        } else {
+            console.warn(`Element with ID "${highElementId}" not found.`);
+        }
+    }
+}
+
+        // Set initial audio source and play it
+        window.onload = function () {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = "https://digitalmedia.ok.ubc.ca/projects/vocabulary/corpus/" + generateRandomNumberForAudio() + ".mp3";
+            assignStringsToElements(pairs);
+
+    // Attempt to simulate play with a programmatic call
+    audioPlayer.play().then(() => {
+        console.log("Audio is playing automatically.");
+    }).catch(() => {
+        // Simulate user interaction by programmatically creating an event
+        const playButtonEvent = new Event('click');
+        audioPlayer.dispatchEvent(playButtonEvent);
+
+        console.log("Autoplay was blocked. Simulating user interaction.");
+        audioPlayer.play(); // Attempt to play again
+    });
+        };
+
+        // Check if all sliders have been answered and one radio button is selected
+        function checkCompletion() {
+            const sliders = document.querySelectorAll('input[type="range"]');
+            const radios = document.querySelectorAll('input[type="radio"]');
+            let allSlidersAnswered = Array.from(sliders).every(slider => slider.value !== '0.5');
+            let radioSelected = Array.from(radios).some(radio => radio.checked);
+
+            document.getElementById('nextButton').disabled = !(allSlidersAnswered && radioSelected);
+        }
+
+        // Play the next audio source and reset sliders
+        function playNextAudio() {
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const finishRadio = document.getElementById('radio2');
+
+    // Check if "Finish" is selected
+    if (finishRadio.checked) {
+        window.location.href = 'thanks_page.html'; // Redirect to the thanks page
+    } else {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = "https://digitalmedia.ok.ubc.ca/projects/vocabulary/corpus/" + generateRandomNumberForAudio() + ".mp3";
+            audioPlayer.play();
+
+            // Reset sliders to the default value
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(slider => slider.value = '0.5');
+
+            // Uncheck radio buttons
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+
+            // Disable the next button until new responses are made
+            document.getElementById('nextButton').disabled = true;
+            bipolarDescriptorArrayCounter = (bipolarDescriptorArrayCounter+1)%10;
+            assignStringsToElements(pairs);
+        }
+        }
+    </script>
+</body>
+</html>

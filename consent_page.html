@@ -1,0 +1,29 @@
+<!-- consent_page.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Page</title>
+</head>
+<body>
+    <h2>Consent Acknowledgement</h2>
+    <p>Please read and acknowledge before proceeding:</p>
+    <form>
+        <input type="radio" id="consentRadio" name="consent" value="acknowledge" onchange="enableNextButton()">
+        <label for="consentRadio">I acknowledge</label>
+        <br><br>
+        <button type="button" id="nextButton" disabled onclick="proceedToAudioPage()">Next</button>
+    </form>
+
+    <script>
+        function enableNextButton() {
+            document.getElementById('nextButton').disabled = !document.getElementById('consentRadio').checked;
+        }
+
+        function proceedToAudioPage() {
+            window.location.href = 'audio_page.html'; // Replace with the correct path to your audio page
+        }
+    </script>
+</body>
+</html>
