@@ -1,0 +1,205 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    background-color: white; 
+    color: #333;
+}
+
+.container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 700px;
+    width: 100%;
+    text-align: left;
+    margin-top: 10px; 
+    margin-bottom: auto; 
+    align-self: flex-start; 
+}
+
+.logo-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.logo-container img {
+    height: 50px;
+    margin-right: 25px;
+}
+h2 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+.audio-player {
+    margin-bottom: 30px;
+}
+
+.sliders {
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.slider-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.slider-group label {
+    flex: 1;
+    font-size: 1rem;
+    text-align: right;
+    height: 25px;
+    margin-top: 5px;
+}
+.slider-group label.low-slider {
+    text-align: left;
+    height: 25px;
+    margin-top: 5px;
+}
+.slider-group input[type="range"] {
+    flex: 4;
+    margin: 0 10px;
+}
+
+/* Style the slider bar */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 18px; /* Increase the slider bar height */
+    background: #EEEEEE;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #848FA0;
+}
+
+/* Style the thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #848FA0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 50px;
+}
+.buttons button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.finish-button {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid black !important;
+}
+.next-button {
+    background-color: black;
+    color: #fff;
+}
+
+.finish-button:disabled {
+    background-color: white;
+    color: #848FA0;
+    border: 1px solid #c0c0c0 !important;
+    cursor: not-allowed;
+}
+
+.next-button:disabled {
+    background-color: #EEEEEE;
+    color: #848FA0;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px; /* Adjust padding for smaller screens */
+    }
+
+    h2 {
+        font-size: 1.2rem; /* Smaller font for headings */
+    }
+
+    p, ul {
+        font-size: 1rem; /* Reduce text size slightly */
+    }
+
+    button {
+        width: 100%; /* Buttons take full width on mobile */
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .logo-container {
+        justify-content: left;
+    }
+
+    .logo-container img {
+        height: 40px; /* Scale down logos */
+        margin-right: 10px;
+    }
+
+    .sliders {
+        margin-bottom: 60px !important;
+    }
+
+    .slider-group {
+        display: flex;
+        flex-direction: column; /* Stack labels and sliders */
+        align-items: stretch; /* Make labels and sliders take full width */
+        height: 35px;
+    }
+
+    .slider-group label {
+        font-size: 0.9rem; /* Adjust label font size */
+        text-align: left; /* Align labels to the left */
+        margin-bottom: 10px;
+    }
+
+    .slider-group label.high-slider {
+        text-align: right;
+        position: relative; /* Allows fine-tuning with top adjustment */
+        top: -50px; /* Adjust the vertical positioning */
+
+    }
+
+    .slider-group input[type="range"] {
+        width: 100%; /* Full width for the slider */
+        margin: 0; /* Remove default margins */
+    }
+
+    .buttons {
+        flex-direction: column; /* Stack buttons */
+        gap: 10px;
+        flex-direction: column-reverse; /* Swaps the button order */
+        margin-bottom: 20px;
+        margin-top: 35px;
+    }
+
+    .buttons button {
+        width: 100%; /* Buttons take the full width */
+        padding: 10px; /* Adjust button padding */
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .audio-player audio {
+        width: 100%;
+        margin-bottom: -20px;
+    }
+}
+
