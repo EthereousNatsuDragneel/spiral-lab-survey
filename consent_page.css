@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: white; 
+    color: #333;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 700px;
+    width: 100%; /* Ensures it scales for smaller screens */
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: auto;
+    align-self: flex-start;
+    box-sizing: border-box; /* Includes padding in width */
+}
+
+.logo-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+    align-items: center;
+    flex-wrap: wrap; /* Ensures logos stack on smaller screens */
+}
+.logo-container img {
+    height: 50px;
+    margin-right: 15px;
+    margin-bottom: 10px; /* Adds spacing when stacked */
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+p, ul {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem; /* Scalable font size */
+}
+ul {
+    padding-left: 20px;
+}
+input[type="radio"] {
+    margin-right: 8px;
+}
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Ensures elements stack if needed */
+    gap: 10px;
+}
+button {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex-shrink: 0; /* Prevents the button from shrinking */
+}
+button:disabled {
+    background-color: #EEEEEE;
+    cursor: not-allowed;
+}
+.details {
+    margin-bottom: 30px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px; /* Adjust padding for smaller screens */
+    }
+    h1 {
+        font-size: 1.25rem; /* Smaller font for headings */
+    }
+    p, ul {
+        font-size: 1rem; /* Reduce text size slightly */
+    }
+    .form-actions {
+        flex-direction: column; /* Stack radio and button vertically */
+        align-items: flex-start; /* Align items to the left */
+        margin-top: -20px;
+    }
+    button {
+        width: 100%; /* Buttons take full width on mobile */
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .logo-container {
+        justify-content: left;
+    }
+    .logo-container img {
+        height: 40px; /* Scale down logos */
+        margin-right: 10px;
+    }
+}

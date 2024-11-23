@@ -1,28 +1,60 @@
-<!-- consent_page.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consent Page</title>
+    <title>SPIRAL Lab Audio Classification Survey</title>
+    <link rel="stylesheet" href="consent_page.css">
 </head>
 <body>
-    <h2>Consent Acknowledgement</h2>
-    <p>Please read and acknowledge before proceeding:</p>
-    <form>
-        <input type="radio" id="consentRadio" name="consent" value="acknowledge" onchange="enableNextButton()">
-        <label for="consentRadio">I acknowledge</label>
-        <br><br>
-        <button type="button" id="nextButton" disabled onclick="proceedToAudioPage()">Next</button>
-    </form>
-
+    <div class="container">
+        <div class="logo-container">
+            <img src="/logo/ubc-logo-2018-crest-black-rgb72.jpg" alt="UBC Logo">
+            <img src="/logo/SPIRALlogoheader 2.png" alt="SPIRAL Logo">
+        </div>
+        <div class="details">
+            <h1>SPIRAL Lab Audio Classification Survey</h1>
+            <p>
+                This survey is conducted by the University of British Columbia (UBC) and hosted on the Prolific platform. You are welcome to participate without a Prolific account, but only Prolific users are eligible for payment.
+            </p>
+            <p>
+                The survey contains approximately 4000 audio files. You are free to classify as many files as you like, with no obligation to complete them all.
+            </p>
+            <p>
+                Each audio file will be accompanied by 10 range sliders, each representing different sound attributes. Your task is to adjust these sliders to best describe the sound you hear.
+            </p>
+            <ul>
+                <li>Attribute 1: (Accidental ↔ Deliberate)</li>
+                <li>Attribute 2: (Aggressive ↔ Peaceful)</li>
+                <li>etc.</li>
+            </ul>
+            <p>
+                After completing each classification, you can either:
+                <ul>
+                    <li>Select "Next Question" to continue with the survey, or</li>
+                    <li>Select "Finish Survey" to exit and be redirected to Prolific.</li>
+                </ul>
+            </p>
+        </div>
+            <p>I have read and understand the instructions and conditions of this survey.</p>
+        <form>
+            <div class="form-actions">
+                <div>
+                    <input type="radio" id="consentRadio" name="consent" value="acknowledge" onchange="enableNextButton()">
+                    <label for="consentRadio">I acknowledge</label>
+                </div>
+                <button type="button" id="nextButton" disabled onclick="proceedToAudioPage()">Continue →</button>
+            </div>
+        </form>
+    
+    </div>
     <script>
         function enableNextButton() {
             document.getElementById('nextButton').disabled = !document.getElementById('consentRadio').checked;
         }
 
         function proceedToAudioPage() {
-            window.location.href = 'audio_page.html'; // Replace with the correct path to your audio page
+            window.location.href = 'audio_page.html';
         }
     </script>
 </body>
