@@ -204,31 +204,129 @@ function checkCompletion() {
   nextButton.disabled = !allSlidersAnswered;
 }
 
-// Play the next audio source and reset sliders
+// Play the next audio source, reset sliders, and send data to the backend
 function playNextAudio() {
   const audioPlayer = document.getElementById("audioPlayer");
-  audioPlayer.src =
-    "https://digitalmedia.ok.ubc.ca/projects/vocabulary/corpus/" +
-    generateRandomNumberForAudio() +
-    ".mp3";
-  audioPlayer.play();
-
-  // Reset sliders to the default value
   const sliders = document.querySelectorAll('input[type="range"]');
-  sliders.forEach((slider) => (slider.value = "0.5"));
 
-  // Disable buttons until new responses are made
-  const finishButton = document.getElementById("finishButton");
-  const nextButton = document.getElementById("nextButton");
+  // Collect slider labels and responses
+  const sliderLabels = [];
+  const sliderValues = [];
 
-  finishButton.disabled = true;
-  nextButton.disabled = true;
+  sliders.forEach((slider, index) => {
+    const lowLabel = document.getElementById(`${index + 1}-low`).textContent;
+    const highLabel = document.getElementById(`${index + 1}-high`).textContent;
+    sliderLabels.push(`${lowLabel}/${highLabel}`);
+    sliderValues.push(parseFloat(slider.value));
+  });
 
-  bipolarDescriptorArrayCounter = (bipolarDescriptorArrayCounter + 1) % 10;
-  assignStringsToElements(pairs);
+  // Send data to the backend
+  fetch("http://127.0.0.1:5000/store-slider-data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_id: "", // Replace with the actual user ID if available
+      audio_file: audioPlayer.getAttribute("src").split("/").pop(), // Extract file name
+      slider_labels: sliderLabels,
+      slider_values: sliderValues,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Proceed to the next audio file after sending data
+        audioPlayer.src =
+          "https://digitalmedia.ok.ubc.ca/projects/vocabulary/corpus/" +
+          generateRandomNumberForAudio() +
+          ".mp3";
+        audioPlayer.play();
+
+        // Reset sliders to the default value
+        sliders.forEach((slider) => (slider.value = "0.5"));
+
+        // Disable buttons until new responses are made
+        const finishButton = document.getElementById("finishButton");
+        const nextButton = document.getElementById("nextButton");
+
+        finishButton.disabled = true;
+        nextButton.disabled = true;
+
+        bipolarDescriptorArrayCounter =
+          (bipolarDescriptorArrayCounter + 1) % 10;
+        assignStringsToElements(pairs);
+      } else {
+        response.json().then((data) => {
+          alert(`Error: ${data.error}`);
+        });
+      }
+    })
+    .catch((error) => console.error("Error:", error));
 }
+
+// Redirect to the thanks page after sending the last response
+function finishSurvey() {
+  const audioPlayer = document.getElementById("audioPlayer");
+  const sliders = document.querySelectorAll('input[type="range"]');
+
+  // Collect slider labels and responses
+  const sliderLabels = [];
+  const sliderValues = [];
+
+  sliders.forEach((slider, index) => {
+    const lowLabel = document.getElementById(`${index + 1}-low`).textContent;
+    const highLabel = document.getElementById(`${index + 1}-high`).textContent;
+    sliderLabels.push(`${lowLabel}/${highLabel}`);
+    sliderValues.push(parseFloat(slider.value));
+  });
+
+  // Send the last data to the backend
+  fetch("http://127.0.0.1:5000/store-slider-data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_id: "", // Replace with the actual user ID if available
+      audio_file: audioPlayer.getAttribute("src").split("/").pop(), // Extract file name
+      slider_labels: sliderLabels,
+      slider_values: sliderValues,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Redirect to the thanks page
+        window.location.href = "thanks_page.html";
+      } else {
+        response.json().then((data) => {
+          alert(`Error: ${data.error}`);
+        });
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
+// // Play the next audio source and reset sliders
+// function playNextAudio() {
+//   const audioPlayer = document.getElementById("audioPlayer");
+//   audioPlayer.src =
+//     "https://digitalmedia.ok.ubc.ca/projects/vocabulary/corpus/" +
+//     generateRandomNumberForAudio() +
+//     ".mp3";
+//   audioPlayer.play();
+
+//   // Reset sliders to the default value
+//   const sliders = document.querySelectorAll('input[type="range"]');
+//   sliders.forEach((slider) => (slider.value = "0.5"));
+
+//   // Disable buttons until new responses are made
+//   const finishButton = document.getElementById("finishButton");
+//   const nextButton = document.getElementById("nextButton");
+
+//   finishButton.disabled = true;
+//   nextButton.disabled = true;
+
+//   bipolarDescriptorArrayCounter = (bipolarDescriptorArrayCounter + 1) % 10;
+//   assignStringsToElements(pairs);
+// }
 
 // Redirect to the thanks page
-function finishSurvey() {
-  window.location.href = "thanks_page.html";
-}
+// function finishSurvey() {
+//   window.location.href = "thanks_page.html";
+// }
