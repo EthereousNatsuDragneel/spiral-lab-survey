@@ -1,0 +1,8 @@
+user_id,audio_no,label_pair_1,response1,label_pair_2,response2,label_pair_3,response3,label_pair_4,response4,label_pair_5,response5
+anonymous,audio_no_622.mp3,electronic/acoustic,0.62,dry/wet,0.56,disturbing/delightful,0.42,dynamic/static,0.38,earthy/airy,0.64
+anonymous,audio_no_2515.mp3,cold/hot,0.29,compressed/expanded,0.65,comforting/upsetting,0.4,dangerous/safe,0.58,comfort/discomfort,0.63
+anonymous,audio_no_2982.mp3,falling/rising,0.62,encouraging/discouraging,0.62,empty/full,0.38,energetic/lethargic,0.41,fast/slow,0.63
+anonymous,audio_no_1133.mp3,blunt/sharp,0.37,assertive/easygoing,0.63,awful/nice,0.43,balanced/unbalanced,0.62,artificial/natural,0.32
+anonymous,audio_no_3411.mp3,hard/soft,0.62,distorted/clear,0.59,grainy/smooth,0.33,empty/full,0.41,growing/shrinking,0.62
+anonymous2,audio_no_2096.mp3,fearful/brave,0.38,funny/serious,0.58,focused/blurred,0.38,futuristic/old-fashioned,0.59,gentle/harsh,0.42
+anonymous2,audio_no_2139.mp3,closed/open,0.61,clean/dirty,0.6,clumsy/coordinated,0.43,close/far,0.6,cheerful/gloomy,0.4
